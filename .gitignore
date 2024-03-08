@@ -2,6 +2,7 @@
 /BusinessDiary/.gradle
 /BusinessDiary/.idea
 /BusinessDiary/app/build
+/BusinessDiary/app/google-services.json  # DB data
 /BusinessDiary/local.properties
 .DS_Store
 /BusinessDiary/build
@@ -9,3 +10,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+
