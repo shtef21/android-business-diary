@@ -1,13 +1,11 @@
 package com.github.shtef21.businessdiary.pages
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
@@ -22,15 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.github.shtef21.businessdiary.logic.DiaryLog
-import com.github.shtef21.businessdiary.logic.addItemToDatabase
-import java.time.LocalDateTime
-import java.util.Date
+import com.github.shtef21.businessdiary.logic.addDiaryLogToDatabase
 
 @Composable
-fun DiaryContainer() {
+fun DiaryFormContainer() {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -41,50 +37,52 @@ fun DiaryContainer() {
         ) {
             DiaryForm()
         }
-        DiaryLogAddButton()
     }
 }
 
 @Composable
 fun DiaryForm() {
-    var message by remember { mutableStateOf("") }
     var addEnabled by remember { mutableStateOf(false) }
-    var formMessage by remember {mutableStateOf("")}
+    var formMessage by remember { mutableStateOf("") }
 
-    var diaryLog by remember {
-        mutableStateOf(
-            DiaryLog(
-                "test",
-                "descr"
-            )
-        )
-    }
+    var diaryLogTitle by remember { mutableStateOf("") }
+    var diaryLogText by remember { mutableStateOf("") }
     val checkValidity = {
         addEnabled =
-            diaryLog.title.length > 0 &&
-            diaryLog.description.length > 0
+            diaryLogTitle.length > 0
+            && diaryLogText.length > 0
     }
     checkValidity()
 
+    diaryLogTitle = "Test title"
+    diaryLogText = "Test body"
+    checkValidity()
+
     TextField(
-        value = diaryLog.title,
+        value = diaryLogTitle,
         onValueChange = {
-            diaryLog.title = it
+            diaryLogTitle = it
             checkValidity()
         },
         label = { Text("Title")}
     )
+    Spacer(modifier = Modifier.height(12.dp))
     TextField(
-        value = diaryLog.description,
+        value = diaryLogText,
         onValueChange = {
-            diaryLog.description = it
+            diaryLogText = it
             checkValidity()
         },
         label = { Text("Description")}
     )
+    Spacer(modifier = Modifier.height(12.dp))
     Button(
         onClick = {
-            addItemToDatabase(diaryLog)
+            val diaryLog = DiaryLog(
+                diaryLogTitle,
+                diaryLogText,
+            )
+            addDiaryLogToDatabase(diaryLog)
             formMessage = "Done."
         },
         enabled = addEnabled
@@ -95,17 +93,4 @@ fun DiaryForm() {
     if (formMessage.length > 0) {
         Text(formMessage)
     }
-}
-
-@Composable
-fun DiaryLogAddButton() {
-    ExtendedFloatingActionButton(
-        onClick = {
-            /* TODO */
-        },
-        icon = { Icon(Icons.Filled.Create, "Add a log") },
-        text = { Text(text = "Compose") },
-        modifier = Modifier
-            .offset(x = 100.dp, y = 320.dp)
-    )
 }
