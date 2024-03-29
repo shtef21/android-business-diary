@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -51,20 +52,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Box(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Navigation(navController)
-                    }
-                    Box(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                            .fillMaxSize()
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            appWrapper(navController)
-                        }
+                        appWrapper(navController)
+                        Navigation(navController)
                     }
                 }
             }
@@ -76,13 +68,13 @@ class MainActivity : ComponentActivity() {
 fun appWrapper(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Routes.ADD_LOG.toString()
+        startDestination = Routes.SHOW_LOGS.toString()
     ) {
-        composable(Routes.ADD_LOG.toString()) {
-            DiaryFormContainer()
-        }
         composable(Routes.SHOW_LOGS.toString()) {
             DiaryShowContainer()
+        }
+        composable(Routes.ADD_LOG.toString()) {
+            DiaryFormContainer()
         }
     }
 
@@ -94,6 +86,7 @@ fun Navigation(navController: NavHostController) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Red)
+            .alpha(0.5f)
     ) {
         Column(
             modifier = Modifier
@@ -101,30 +94,6 @@ fun Navigation(navController: NavHostController) {
                 .weight(1f)
                 .background(Color.Green)
         ) {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(all = 16.dp)
-            ) {
-                Text(text = "Card 1")
-            }
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(all = 16.dp)
-            ) {
-                Text(text = "Card 2")
-            }
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(all = 16.dp)
-            ) {
-                Text(text = "Card 3")
-            }
         }
         // Buttons content
         Row(
@@ -150,15 +119,5 @@ fun Navigation(navController: NavHostController) {
                 //.offset(x = 200.dp, y = 670.dp)
             )
         }
-        /*ExtendedFloatingActionButton(
-            onClick = {
-                navController.navigate(Routes.SHOW_LOGS.toString())
-            },
-            icon = { Icon(Icons.Filled.Home, "Home page") },
-            text = { Text(text = "Home") },
-            modifier = Modifier
-            //.offset(x = 30.dp, y = 670.dp)
-        )
-         */
     }
 }
