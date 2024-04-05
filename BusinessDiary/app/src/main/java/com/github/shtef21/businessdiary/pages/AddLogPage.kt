@@ -5,12 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -21,12 +16,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.github.shtef21.businessdiary.logic.DiaryLog
-import com.github.shtef21.businessdiary.logic.addDiaryLogToDatabase
+import com.github.shtef21.businessdiary.logic.Routes
+import com.github.shtef21.businessdiary.logic.dbAddOrUpdateLog
 
 @Composable
-fun DiaryFormContainer() {
+fun AddLogContainer(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -35,13 +31,13 @@ fun DiaryFormContainer() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            DiaryForm()
+            AddLogForm(navController)
         }
     }
 }
 
 @Composable
-fun DiaryForm() {
+fun AddLogForm(navController: NavController) {
     var addEnabled by remember { mutableStateOf(false) }
     var formMessage by remember { mutableStateOf("") }
 
@@ -82,8 +78,16 @@ fun DiaryForm() {
                 diaryLogTitle,
                 diaryLogText,
             )
-            addDiaryLogToDatabase(diaryLog)
-            formMessage = "Done."
+            formMessage = "Sending..."
+            dbAddOrUpdateLog(
+                log = diaryLog,
+                onSuccess = {
+                    navController.navigate(Routes.SHOW_LOGS.toString())
+                },
+                onFailure = { exception ->
+                    formMessage = "Error: ${exception.message}"
+                }
+            )
         },
         enabled = addEnabled
     ) {

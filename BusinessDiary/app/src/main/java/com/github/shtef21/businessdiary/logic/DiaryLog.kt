@@ -1,10 +1,12 @@
 package com.github.shtef21.businessdiary.logic
 
 import java.util.Date
+import java.util.UUID
 
 data class DiaryLog (
     var title: String,
-    var description: String
+    var description: String,
+    val logId: String = UUID.randomUUID().toString()
 )
 
 /*
