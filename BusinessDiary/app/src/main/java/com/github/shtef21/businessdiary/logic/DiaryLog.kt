@@ -4,9 +4,9 @@ import java.util.Date
 import java.util.UUID
 
 data class DiaryLog (
-    var title: String,
-    var description: String,
-    val logId: String = UUID.randomUUID().toString()
+    val logId: String = UUID.randomUUID().toString(),
+    var title: String = "",
+    var description: String = ""
 )
 
 /*

@@ -1,5 +1,6 @@
 package com.github.shtef21.businessdiary
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -24,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -32,6 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.github.shtef21.businessdiary.logic.Routes
 import com.github.shtef21.businessdiary.pages.AddLogContainer
 import com.github.shtef21.businessdiary.pages.DiaryShowContainer
+import com.github.shtef21.businessdiary.pages.testing_firebaseUI
 import com.github.shtef21.businessdiary.ui.theme.AppBackground
 import com.github.shtef21.businessdiary.ui.theme.BusinessDiaryTheme
 
@@ -52,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        appWrapper(navController)
+                        appWrapper(navController, LocalContext.current)
                         Navigation(navController)
                     }
                 }
@@ -62,7 +66,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun appWrapper(navController: NavHostController) {
+fun appWrapper(navController: NavHostController, context: Context) {
     NavHost(
         navController = navController,
         startDestination = Routes.SHOW_LOGS.toString()
@@ -72,6 +76,9 @@ fun appWrapper(navController: NavHostController) {
         }
         composable(Routes.SHOW_LOGS.toString()) {
             DiaryShowContainer()
+        }
+        composable(Routes.TESTING.toString()) {
+            testing_firebaseUI(context)
         }
     }
 
@@ -99,7 +106,7 @@ fun Navigation(navController: NavHostController) {
                     .padding(5.dp, 8.dp, 5.dp, 10.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                NavButton(navController, Routes.SHOW_LOGS, Icons.Filled.Search, "Search", false)
+                NavButton(navController, Routes.TESTING, Icons.Filled.Build, "Search", false)
                 NavButton(navController, Routes.SHOW_LOGS, Icons.Filled.Home, "Home", true)
                 NavButton(navController, Routes.ADD_LOG, Icons.Filled.Create, "Compose", false)
             }
