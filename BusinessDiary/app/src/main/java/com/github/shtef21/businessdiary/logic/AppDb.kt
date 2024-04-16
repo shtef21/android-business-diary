@@ -1,5 +1,9 @@
 package com.github.shtef21.businessdiary.logic
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
 import com.github.shtef21.businessdiary.logic.AppProperties.dbUrl
 import com.google.firebase.Firebase
@@ -28,28 +32,24 @@ fun dbAddOrUpdateLog(
         }
 }
 
-fun dbReadLogs(onDataChange: (List<DiaryLog>) -> Unit, onCancelled: (DatabaseError) -> Unit) {
+fun dbListenForLogChanges(onDataChange: (List<DiaryLog>) -> Unit, onCancelled: (DatabaseError) -> Unit = {}) {
     // TODO: add auth
+
     val database = Firebase.database(dbUrl).reference
+    val tableRef = database.child(dbTableName)
 
-    val logsRef = database.child(dbTableName)
-
-    val logListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val logs = mutableListOf<DiaryLog>()
-            for (snapshot in dataSnapshot.children) {
-                val log = snapshot.getValue<DiaryLog>()
-                log?.let {
-                    logs.add(it)
-                }
+    // Listen for changes in log list
+    tableRef.addValueEventListener(object: ValueEventListener {
+        override fun onDataChange(logsSnapshot: DataSnapshot) {
+            val logs = logsSnapshot!!.children.map {
+                it.getValue(DiaryLog::class.java)!!
             }
             onDataChange(logs)
         }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            onCancelled(databaseError)
+        override fun onCancelled(error: DatabaseError) {
+            onCancelled(error)
         }
-    }
+    })
 
-    logsRef.addValueEventListener(logListener)
+
 }

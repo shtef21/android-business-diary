@@ -43,29 +43,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
+import com.github.shtef21.businessdiary.logic.AppProperties.dbUrl
 import com.github.shtef21.businessdiary.logic.DiaryLog
-import com.github.shtef21.businessdiary.logic.dbReadLogs
+import com.github.shtef21.businessdiary.logic.dbListenForLogChanges
 import com.github.shtef21.businessdiary.ui.theme.AppBackground
 import com.github.shtef21.businessdiary.ui.theme.BlueLog
 import com.github.shtef21.businessdiary.ui.theme.LogDesc
+import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
+import com.google.firebase.database.getValue
 
 @Composable
 fun DiaryShowContainer() {
 
-
     var logs: List<DiaryLog> by remember {
         mutableStateOf(emptyList())
     }
-
-    // TODO: fix this part
-    /* dbReadLogs(
-        onDataChange = { logsUpdate ->
-            logs = logsUpdate
-        },
-        onCancelled = { dbError ->
-            // Does nothing
-        }
-    )*/
+    dbListenForLogChanges ({ logs = it })
 
     Box(
         modifier = Modifier
@@ -73,22 +71,18 @@ fun DiaryShowContainer() {
         Surface(
             shadowElevation = 4.dp
         ) {
-            Column(
+
+            LazyColumn(
                 modifier = Modifier
                     .padding(12.dp)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                LogCard("Log title", "Log description ".repeat(2))
-                LogCard("Log title", "Log description ".repeat(2))
+                items(logs) {  log ->
+                    LogCard(log.title, log.description)
+                }
             }
 
-            // TODO: fix this part
-            /*LazyColumn {
-                items(logs) { log ->
-                    LogCard(title = log.title, description = log.description)
-                }
-            }*/
         }
     }
 }

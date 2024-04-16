@@ -50,10 +50,6 @@ fun AddLogForm(navController: NavController) {
     }
     checkValidity()
 
-    diaryLogTitle = "Test title"
-    diaryLogText = "Test body"
-    checkValidity()
-
     TextField(
         value = diaryLogTitle,
         onValueChange = {

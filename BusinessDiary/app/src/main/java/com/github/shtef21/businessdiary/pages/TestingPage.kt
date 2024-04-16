@@ -58,7 +58,8 @@ fun testing_firebaseUI(context: Context) {
 
             // after getting the value we are setting
             // our value to message.
-            message.value = "Found ${list.size} items\n ${list.map { "- " + it.title + "\n" }}"!!
+            message.value = "Found ${list.size} items\n" +
+                    "${list.map { it.title }}"!!
         }
 
         override fun onCancelled(error: DatabaseError) {
