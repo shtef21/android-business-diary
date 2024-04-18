@@ -44,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
-import com.github.shtef21.businessdiary.logic.AppProperties.dbUrl
 import com.github.shtef21.businessdiary.logic.DiaryLog
 import com.github.shtef21.businessdiary.logic.dbListenForLogChanges
 import com.github.shtef21.businessdiary.ui.theme.AppBackground
@@ -72,6 +71,15 @@ fun DiaryShowContainer() {
             shadowElevation = 4.dp
         ) {
 
+            Column(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                LogCard("Loading...", "Card loading is in progress", Color.Gray)
+            }
+
             LazyColumn(
                 modifier = Modifier
                     .padding(12.dp)
@@ -79,7 +87,7 @@ fun DiaryShowContainer() {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(logs) {  log ->
-                    LogCard(log.title, log.description)
+                    LogCard(log.title, log.description, BlueLog)
                 }
             }
 
@@ -88,11 +96,15 @@ fun DiaryShowContainer() {
 }
 
 @Composable
-fun LogCard(title: String, description: String) {
+fun LogCard(title: String, description: String, cardColor: Color) {
     val cardHeight = 80.dp
     val labelHeight = cardHeight - 20.dp
 
-    Card {
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,7 +120,7 @@ fun LogCard(title: String, description: String) {
                             0.dp, 8.dp, 8.dp, 0.dp
                         )
                     )
-                    .background(BlueLog)
+                    .background(cardColor)
             )
             Box(
                 modifier = Modifier
@@ -119,7 +131,7 @@ fun LogCard(title: String, description: String) {
                 Icon(
                     Icons.Rounded.KeyboardArrowRight,
                     contentDescription = "test",
-                    tint = BlueLog,
+                    tint = cardColor,
                     modifier = Modifier
                         .size(32.dp)
                 )
@@ -135,7 +147,7 @@ fun LogCard(title: String, description: String) {
                 ) {
                     Text(
                         text = title,
-                        color = BlueLog,
+                        color = cardColor,
                         fontSize = 20.sp
                     )
                     Text(

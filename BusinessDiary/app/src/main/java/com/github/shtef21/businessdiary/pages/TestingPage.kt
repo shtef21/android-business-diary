@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
-import com.github.shtef21.businessdiary.logic.AppProperties.dbUrl
 import com.github.shtef21.businessdiary.logic.DiaryLog
+import com.github.shtef21.businessdiary.logic.dbTestAddSomeUser
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -43,7 +44,7 @@ fun testing_firebaseUI(context: Context) {
     }
     // on below line creating variable for firebase
     // database and table reference.
-    val database = Firebase.database(dbUrl).reference
+    val database = Firebase.database.reference
     val tableRef = database.child(dbTableName)
 
     // on below line adding value event listener for database reference.
@@ -82,6 +83,15 @@ fun testing_firebaseUI(context: Context) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Button(
+            onClick = {
+                dbTestAddSomeUser()
+            }
+        ) {
+            Text("Add some user")
+        }
+
         // on below line adding a text
         // for displaying heading.
         Text(

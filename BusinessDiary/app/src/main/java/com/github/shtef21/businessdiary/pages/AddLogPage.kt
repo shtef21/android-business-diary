@@ -1,5 +1,6 @@
 package com.github.shtef21.businessdiary.pages
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,8 +42,8 @@ fun AddLogForm(navController: NavController) {
     var addEnabled by remember { mutableStateOf(false) }
     var formMessage by remember { mutableStateOf("") }
 
-    var diaryLogTitle by remember { mutableStateOf("") }
-    var diaryLogText by remember { mutableStateOf("") }
+    var diaryLogTitle by remember { mutableStateOf("Some title") }
+    var diaryLogText by remember { mutableStateOf("some Body") }
     val checkValidity = {
         addEnabled =
             diaryLogTitle.length > 0
@@ -80,8 +81,9 @@ fun AddLogForm(navController: NavController) {
                 onSuccess = {
                     navController.navigate(Routes.SHOW_LOGS.toString())
                 },
-                onFailure = { exception ->
-                    formMessage = "Error: ${exception.message}"
+                onDatabaseError = { dbError ->
+                    Log.e("-- DB ERROR --", dbError.message)
+                    formMessage = "Error. More info in Logcat."
                 }
             )
         },
