@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
 import com.github.shtef21.businessdiary.logic.DiaryLog
-import com.github.shtef21.businessdiary.logic.dbTestAddSomeUser
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -86,7 +85,7 @@ fun testing_firebaseUI(context: Context) {
 
         Button(
             onClick = {
-                dbTestAddSomeUser()
+
             }
         ) {
             Text("Add some user")
