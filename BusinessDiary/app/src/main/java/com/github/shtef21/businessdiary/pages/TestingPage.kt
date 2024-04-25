@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +36,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 
 @Composable
-fun testing_firebaseUI(context: Context) {
+fun testing_firebaseUI() {
+
+    val context = LocalContext.current
 
     // on below line creating variable for message.
     val message = remember {
@@ -65,7 +68,11 @@ fun testing_firebaseUI(context: Context) {
         override fun onCancelled(error: DatabaseError) {
             // calling on cancelled method when we receive
             // any error or we are not able to get the data.
-            Toast.makeText(context, "Fail to get data.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Fail to get data.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     })
 
