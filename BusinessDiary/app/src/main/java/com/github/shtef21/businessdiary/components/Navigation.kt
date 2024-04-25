@@ -29,54 +29,47 @@ fun Navigation(navController: NavHostController, initialRoute: String) {
         mutableStateOf(initialRoute)
     }
 
-    Surface(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Red)
-            .shadow(4.dp),
+            .padding(5.dp, 8.dp, 5.dp, 10.dp),
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(5.dp, 8.dp, 5.dp, 10.dp),
-            horizontalArrangement = Arrangement.SpaceAround
+        NavButton(
+            Icons.Filled.Settings,
+            "DEV PAGE",
+            Routes.TESTING.toString(),
+            currentRoute
         ) {
-            NavButton(
-                Icons.Filled.Settings,
-                "DEV PAGE",
-                Routes.TESTING.toString(),
-                currentRoute
-            ) {
-                currentRoute = Routes.TESTING.toString()
-                navController.navigate(currentRoute)
-            }
-            NavButton(
-                Icons.Filled.Create,
-                "Details",
-                Routes.LOG_DETAILS.toString(),
-                currentRoute
-            ) {
-                currentRoute = Routes.LOG_DETAILS.toString()
-                navController.navigate(currentRoute)
-            }
-            NavButton(
-                Icons.Filled.Home,
-                "Home",
-                Routes.SHOW_LOGS.toString(),
-                currentRoute
-            ) {
-                currentRoute = Routes.SHOW_LOGS.toString()
-                navController.navigate(currentRoute)
-            }
-            NavButton(
-                Icons.Filled.Add,
-                "Compose",
-                Routes.ADD_LOG.toString(),
-                currentRoute
-            ) {
-                currentRoute = Routes.ADD_LOG.toString()
-                navController.navigate(currentRoute)
-            }
+            currentRoute = Routes.TESTING.toString()
+            navController.navigate(currentRoute)
+        }
+        NavButton(
+            Icons.Filled.Create,
+            "Details",
+            Routes.LOG_DETAILS.toString(),
+            currentRoute
+        ) {
+            currentRoute = Routes.LOG_DETAILS.toString()
+            navController.navigate(currentRoute)
+        }
+        NavButton(
+            Icons.Filled.Home,
+            "Home",
+            Routes.SHOW_LOGS.toString(),
+            currentRoute
+        ) {
+            currentRoute = Routes.SHOW_LOGS.toString()
+            navController.navigate(currentRoute)
+        }
+        NavButton(
+            Icons.Filled.Add,
+            "Compose",
+            Routes.ADD_LOG.toString(),
+            currentRoute
+        ) {
+            currentRoute = Routes.ADD_LOG.toString()
+            navController.navigate(currentRoute)
         }
     }
 }

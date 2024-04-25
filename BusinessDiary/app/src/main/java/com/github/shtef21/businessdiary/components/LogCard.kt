@@ -36,6 +36,7 @@ fun LogCard(title: String, description: String, cardColor: Color) {
             defaultElevation = 2.dp
         )
     ) {
+        // Inner wrapper
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -43,6 +44,8 @@ fun LogCard(title: String, description: String, cardColor: Color) {
                 .height(cardHeight)
                 .offset(0.dp, 10.dp)
         ) {
+
+            // Vertical colored line
             Box(
                 modifier = Modifier
                     .size(3.dp, labelHeight)
@@ -53,6 +56,8 @@ fun LogCard(title: String, description: String, cardColor: Color) {
                     )
                     .background(cardColor)
             )
+
+            // Arrow icon
             Box(
                 modifier = Modifier
                     .offset(8.dp, -10.dp)
@@ -67,6 +72,8 @@ fun LogCard(title: String, description: String, cardColor: Color) {
                         .size(32.dp)
                 )
             }
+
+            // Title and description
             Box(
                 modifier = Modifier
                     .offset(48.dp, 0.dp)

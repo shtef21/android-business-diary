@@ -1,17 +1,12 @@
 package com.github.shtef21.businessdiary.logic
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import com.github.shtef21.businessdiary.entities.DiaryLog
 import com.github.shtef21.businessdiary.logic.AppProperties.dbTableName
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
-import com.google.firebase.database.getValue
 
 fun dbAddOrUpdateLog(
     log: DiaryLog,
