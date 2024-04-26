@@ -10,5 +10,6 @@ enum class Difficulty(val color: Color) {
     Easy(GreenLog),
     Normal(OrangeLog),
     Difficult(RedLog),
-    Unset(BlueLog)
+    Unset(BlueLog),
+    Unknown(Color.Gray)
 }

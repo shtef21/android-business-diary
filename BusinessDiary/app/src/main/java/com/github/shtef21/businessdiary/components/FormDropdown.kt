@@ -28,6 +28,7 @@ fun FormDropdown(
     selectedValue: String,
     options: List<Difficulty>,
     label: String,
+    isReadOnly: Boolean,
     onChange: (Difficulty) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -50,7 +51,10 @@ fun FormDropdown(
                 .menuAnchor()
         )
 
-        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
             options.forEach { option: Difficulty ->
                 DropdownMenuItem(
                     text = {
@@ -67,7 +71,9 @@ fun FormDropdown(
                     },
                     onClick = {
                         expanded = false
-                        onChange(option)
+                        if (!isReadOnly) {
+                            onChange(option)
+                        }
                     }
                 )
             }

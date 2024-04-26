@@ -6,8 +6,8 @@ import java.util.UUID
 class DiaryLog (
     var title: String = "",
     var description: String = "",
+    var difficulty: Difficulty = Difficulty.Unset,
     val logId: String = UUID.randomUUID().toString(),
-    val difficulty: Difficulty = Difficulty.Normal
 )
 
 /*

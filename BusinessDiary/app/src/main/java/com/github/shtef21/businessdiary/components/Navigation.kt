@@ -45,15 +45,6 @@ fun Navigation(navController: NavHostController, initialRoute: String) {
             navController.navigate(currentRoute)
         }
         NavButton(
-            Icons.Filled.Create,
-            "Details",
-            Routes.LOG_DETAILS.toString(),
-            currentRoute
-        ) {
-            currentRoute = Routes.LOG_DETAILS.toString()
-            navController.navigate(currentRoute)
-        }
-        NavButton(
             Icons.Filled.Home,
             "Home",
             Routes.SHOW_LOGS.toString(),

@@ -26,11 +26,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.github.shtef21.businessdiary.components.Navigation
-import com.github.shtef21.businessdiary.entities.DiaryLog
 import com.github.shtef21.businessdiary.logic.Routes
 import com.github.shtef21.businessdiary.pages.AddLogContainer
 import com.github.shtef21.businessdiary.pages.DiaryShowContainer
-import com.github.shtef21.businessdiary.pages.LogDetail
 import com.github.shtef21.businessdiary.pages.testing_firebaseUI
 import com.github.shtef21.businessdiary.ui.theme.BusinessDiaryTheme
 
@@ -105,9 +103,6 @@ fun PageRouter(navController: NavHostController, initialRoute: String) {
         }
         composable(Routes.TESTING.toString()) {
             testing_firebaseUI()
-        }
-        composable(Routes.LOG_DETAILS.toString()) {
-            LogDetail(DiaryLog("", ""))
         }
     }
 }

@@ -7,19 +7,18 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import java.util.UUID
 
 fun dbAddOrUpdateLog(
     log: DiaryLog,
     onSuccess: () -> Unit,
     onDatabaseError: (DatabaseError) -> Unit
 ) {
-
-    // TODO: add auth
     val database = Firebase.database.reference
 
     database
         .child(dbTableName)
-        .child(log.logId)
+        .child(log.logId.toString())
         .setValue(
             log
         ) { err, _ ->
@@ -32,9 +31,27 @@ fun dbAddOrUpdateLog(
         }
 }
 
-fun dbListenForLogChanges(onDataChange: (List<DiaryLog>) -> Unit, onCancelled: (DatabaseError) -> Unit = {}) {
-    // TODO: add auth
+fun dbDeleteLog(
+    logId: String,
+    onSuccess: () -> Unit,
+    onDatabaseError: (DatabaseError) -> Unit
+) {
+    val database = Firebase.database.reference
 
+    database
+        .child(dbTableName)
+        .child(logId)
+        .removeValue { err, _ ->
+            if (err != null) {
+                onDatabaseError(err)
+            }
+            else {
+                onSuccess()
+            }
+        }
+}
+
+fun dbListenForLogChanges(onDataChange: (List<DiaryLog>) -> Unit, onCancelled: (DatabaseError) -> Unit = {}) {
     val database = Firebase.database.reference
     val tableRef = database.child(dbTableName)
 
